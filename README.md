@@ -1,111 +1,106 @@
 # Handwritten Digit Recognition using CNN
 
-This project implements a Convolutional Neural Network (CNN) in MATLAB to recognize handwritten digits from a dataset of 28x28 grayscale images. The model classifies digits into 10 categories, representing digits 0 through 9. This project leverages MATLAB's deep learning tools to create an efficient and accurate model for digit classification.
+This project implements a **Convolutional Neural Network (CNN)** in **MATLAB** for recognizing handwritten digits. The model classifies digits from **0 to 9** using a dataset of **28x28 grayscale images**.
 
 ## Table of Contents
-- [Overview](#overview)
+- [Project Overview](#project-overview)
 - [Dataset](#dataset)
-- [Methodology](#methodology)
-- [Code Explanation](#code-explanation)
+- [Model Architecture](#model-architecture)
+- [Training Process](#training-process)
+- [Testing and Evaluation](#testing-and-evaluation)
+- [Code Overview](#code-overview)
 - [Results](#results)
 - [Key Takeaways](#key-takeaways)
-- [License](#license)
 
-## Overview
+## Project Overview
 
-The goal of this project is to build a CNN model that can accurately classify handwritten digits. The model is trained on a dataset of 28x28 grayscale images and is evaluated using accuracy and loss metrics. The model achieves high performance, making it suitable for real-world digit recognition applications.
+The primary goal of this project is to develop a CNN capable of classifying handwritten digits from images. Using MATLAB's deep learning framework, we designed, trained, and evaluated a model that can achieve high accuracy on the **DigitDataset**. This project demonstrates how a **multi-layer neural network (MLNN)** can be applied to solve a supervised learning task.
 
 ## Dataset
 
-The dataset used for this project is MATLAB’s built-in `DigitDataset`, which contains images of handwritten digits organized into folders labeled with the corresponding digit.
+The dataset used is MATLAB’s built-in **`DigitDataset`**, which contains images of handwritten digits (0–9). The dataset is split into three subsets:
 
-If you do not have this dataset, you can obtain it by following the instructions provided in the [MATLAB documentation](https://www.mathworks.com/help/matlab/ref/matlab.io.datastore.imagedatastore.html) or by using your own dataset of handwritten digits in a similar structure.
+- **Training and Validation Set:** 80% of the dataset is used for training and validation.
+- **Testing Set:** 20% of the dataset is reserved for testing the model's performance.
 
-The dataset is split as follows:
-- **Training and Validation:** 80% of the dataset
-- **Testing:** 20% of the dataset
+The dataset is loaded and managed using MATLAB’s **`imageDatastore`** function, which makes it easy to handle large image datasets.
 
-The dataset is loaded using MATLAB's `imageDatastore` function, which simplifies data loading and preprocessing.
+## Model Architecture
 
-## Methodology
+The architecture of the CNN consists of several layers that work together to extract features and classify the digits:
 
-### Dataset Preparation:
-1. The dataset is loaded using the `imageDatastore` function.
-2. It is split into training (80%) and testing (20%) sets.
-3. The training set is further divided into 80% training and 20% validation sets.
+1. **Input Layer:** Accepts input images of size 28x28 pixels in grayscale.
+2. **Convolutional Layers:** Two convolutional layers with 3x3 filters (16 filters in the first layer and 32 in the second) to extract features from the images.
+3. **Batch Normalization & ReLU:** Normalize activations and introduce non-linearity after each convolutional layer.
+4. **Max Pooling Layers:** Reduces the spatial dimensions of the images (downsampling) by applying a 2x2 pooling operation.
+5. **Fully Connected Layers:** 
+   - First fully connected layer with 128 neurons.
+   - Second fully connected layer with 10 neurons (one for each digit).
+6. **Dropout Layer:** Applies a 50% dropout rate to prevent overfitting.
+7. **Softmax Layer:** Converts the raw network output into probabilities for each digit.
+8. **Classification Layer:** Assigns the final class label based on the probabilities.
 
-### CNN Architecture:
-1. **Input Layer:** Accepts 28x28 grayscale images.
-2. **Convolutional Layers:** Two convolutional layers with 3x3 filters (16 and 32 filters).
-3. **Batch Normalization & ReLU:** Normalize activations and introduce non-linearity.
-4. **Max Pooling:** Reduce spatial dimensions by half.
-5. **Fully Connected Layers:** 128 neurons in the first fully connected layer, followed by 10 neurons (one for each digit).
-6. **Dropout Layer:** Dropout rate of 50% to prevent overfitting.
-7. **Softmax & Classification Layers:** Convert scores to probabilities and assign class labels.
+## Training Process
 
-### Training:
-- **Optimizer:** Adam
+The model was trained with the following hyperparameters:
+
+- **Optimizer:** Adam optimizer
 - **Learning Rate:** 0.001
 - **Epochs:** 10
 - **Mini-Batch Size:** 128
-- **Validation Data:** Used to monitor performance during training.
-- **Early Stopping:** Monitoring of validation performance every 30 iterations.
+- **Validation:** A separate validation set is used to monitor performance during training.
 
-### Testing & Evaluation:
-- After training, the model is evaluated on the test dataset.
-- Performance metrics such as accuracy and loss are calculated.
-- A single test image is displayed with predicted and actual labels.
+During training, the model was able to learn from the dataset and improve its performance over time.
 
-## Code Explanation
+### Early Stopping:
+The training process includes indirect early stopping by monitoring validation performance at regular intervals.
 
-The project contains the following key components:
+## Testing and Evaluation
 
-1. **Training Script (`train_model.m`)**
-   - Loads and splits the dataset into training, validation, and test sets.
-   - Defines the CNN architecture with layers and hyperparameters.
-   - Trains the model using the `trainNetwork` function and saves the model.
-   - Tracks training progress and stores the trained model for later use.
+After training, the model was evaluated on the **test set**, and the following metrics were calculated:
 
-2. **Testing Script (`test_model.m`)**
+- **Accuracy:** The percentage of correctly classified digits.
+- **Loss:** The value representing how well the model fits the data.
+
+Additionally, a random test image was displayed along with its **predicted** and **actual labels** for visual inspection.
+
+## Code Overview
+
+The project consists of the following main scripts:
+
+1. **`train_model.m`:** 
+   - Loads the dataset, splits it into training, validation, and test sets.
+   - Defines the CNN architecture and trains the model using the **`trainNetwork`** function.
+   - Saves the trained model for future use.
+
+2. **`test_model.m`:**
    - Loads the trained model from the saved file.
-   - Runs predictions on the test set and calculates the accuracy.
-   - Displays one random test image along with its predicted and actual labels for visual inspection.
+   - Evaluates the model on the test set and calculates its accuracy.
+   - Displays a random test image and its predicted label.
 
-3. **Random Predictions Script (`random_predictions.m`)**
-   - Loads the trained model.
-   - Randomly selects test images and generates predictions.
-   - Displays the predictions in a 5x5 grid for easy visualization of the model's accuracy.
+3. **`random_predictions.m`:**
+   - Makes predictions on random test images.
+   - Displays the images along with their predicted labels in a 5x5 grid format.
 
 ## Results
 
-During training, the model achieved the following:
+### Training:
 - **Validation Accuracy:** 99.81% after 10 epochs.
-- **Loss:** Both training and validation loss consistently decreased, indicating effective learning.
+- **Loss:** The training and validation loss steadily decreased, showing effective learning.
 
-### Test Accuracy:
-The model performed well on the test dataset, with an overall high accuracy, demonstrating the robustness and generalization of the model.
+### Test Performance:
+The model achieved high accuracy on the test dataset, confirming its ability to generalize to new, unseen data.
 
-### Model Performance:
-- **Confusion Matrix:** The confusion matrix below shows the distribution of correct and incorrect classifications across different digits.
-![Confusion Matrix](path/to/confusion-matrix.png)
+### Example Test Predictions:
+Here are some example predictions on randomly selected test images:
+- Predicted label: `7`, Actual label: `7`
+- Predicted label: `1`, Actual label: `1`
 
-- **Precision/Recall/F1-Score:** These metrics can provide additional insights into how the model performs for each digit. Here are the results:
-   - Precision: 99.5%
-   - Recall: 99.6%
-   - F1-Score: 99.55%
-
-#### Accuracy Curve:
-![Accuracy Curve](path/to/accuracy-curve.png)
-
-#### Example Predictions:
-Here are some example predictions on random test images:
-![Random Predictions](path/to/random-predictions.png)
+The accuracy and robustness of the model are demonstrated by the consistent performance across various test images.
 
 ## Key Takeaways
-- The CNN performs well on handwritten digit recognition with an accuracy of over 99% on the validation set.
-- MATLAB provides built-in functions that simplify building and training deep learning models.
-- The trained model can be reused without retraining, saving time and computational resources.
 
-## License
+- The CNN model performs excellently on the handwritten digit recognition task with an accuracy of **over 99%**.
+- MATLAB's deep learning toolbox simplifies the process of building, training, and evaluating complex models.
+- The trained model is reusable without retraining, making it efficient for future digit recognition tasks.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
