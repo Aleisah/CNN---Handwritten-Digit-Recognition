@@ -10,7 +10,6 @@ This project implements a **Convolutional Neural Network (CNN)** in **MATLAB** f
 - [Testing and Evaluation](#testing-and-evaluation)
 - [Code Overview](#code-overview)
 - [Results](#results)
-- [Key Takeaways](#key-takeaways)
 
 ## Project Overview
 
@@ -68,19 +67,13 @@ Additionally, a random test image was displayed along with its **predicted** and
 
 The project consists of the following main scripts:
 
-1. **`train_model.m`:** 
-   - Loads the dataset, splits it into training, validation, and test sets.
-   - Defines the CNN architecture and trains the model using the **`trainNetwork`** function.
-   - Saves the trained model for future use.
+1. **`DigitRecognition.m`**: 
+   - Loads the dataset, splits it, defines the CNN architecture, and trains the model.
+   - Saves the trained model for later use.
 
-2. **`test_model.m`:**
-   - Loads the trained model from the saved file.
-   - Evaluates the model on the test set and calculates its accuracy.
-   - Displays a random test image and its predicted label.
-
-3. **`random_predictions.m`:**
-   - Makes predictions on random test images.
-   - Displays the images along with their predicted labels in a 5x5 grid format.
+2. **`predictDigit.m`**: 
+   - Loads the trained model and tests it on the test set.
+   - Displays predictions on random test images.
 
 ## Results
 
@@ -91,16 +84,7 @@ The project consists of the following main scripts:
 ### Test Performance:
 The model achieved high accuracy on the test dataset, confirming its ability to generalize to new, unseen data.
 
-### Example Test Predictions:
-Here are some example predictions on randomly selected test images:
-- Predicted label: `7`, Actual label: `7`
-- Predicted label: `1`, Actual label: `1`
+## How to Use
 
-The accuracy and robustness of the model are demonstrated by the consistent performance across various test images.
-
-## Key Takeaways
-
-- The CNN model performs excellently on the handwritten digit recognition task with an accuracy of **over 99%**.
-- MATLAB's deep learning toolbox simplifies the process of building, training, and evaluating complex models.
-- The trained model is reusable without retraining, making it efficient for future digit recognition tasks.
-
+1. **Train the Model**: Run the `DigitRecognition.m` script to train and save the model.
+2. **Test the Model**: Run the `predictDigit.m` script to evaluate the model on test data and display predictions.
